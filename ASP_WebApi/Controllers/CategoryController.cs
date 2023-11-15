@@ -33,8 +33,9 @@ namespace ASP_WebApi.Controllers
             if (obj.Name == obj.DisplayOrders.ToString())
             {
                 //AddModelError(key, string) key being our name and normal text display option
-                ModelState.AddModelError("Name", "The DisplayOrders cannot exactly match the Name");
+                ModelState.AddModelError("name", "The DisplayOrders cannot exactly match the name");
             }
+
             if (ModelState.IsValid) //this basically check if the modestate(obj) isvalid then it will go to Category
             {
                 _db.Category.Add(obj); //this line here is telling entity framework to add any input data we inputed to this category table on database but to save it we use _db.savechanges();
