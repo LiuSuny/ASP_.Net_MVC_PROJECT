@@ -1,5 +1,7 @@
 
 using ASP_.Net_MVC_PROJECT.DATAACCESS.Data;
+using ASP_.Net_MVC_PROJECT.DATAACCESS.Repository;
+using ASP_.Net_MVC_PROJECT.DATAACCESS.Repository.IRepository;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +12,9 @@ builder.Services.AddControllersWithViews();
 //next we want to tell our builder that we need to use entityframework.core(sort of dependence injection )
 builder.Services.AddDbContext<ApplicationDBConnection>(option => 
 option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))); //using option to tell our connection that we want to use sql server note: we purposely added defaultConnect1 on jason appsetting is different
+
+builder.Services.AddScoped<IUinitOfWork, UnitOfWork>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -29,6 +34,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{area=Customer}/{controller=Home}/{action=Index}/{id?}");
 
 app.Run();

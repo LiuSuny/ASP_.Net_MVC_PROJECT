@@ -20,4 +20,8 @@
     <ProjectReference Include="..\ASP_.NET_MVC_PROJECT.DATAACCESS\ASP_.Net_MVC_PROJECT.DATAACCESS.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+  </ItemGroup>
+
 </Project>
