@@ -25,8 +25,8 @@ namespace ASP_WebApi.Areas.Admin.Controllers
             
             return View(objProductList); //passing the category view to controller
         }
-
-        public IActionResult Create() //this method help with creation of new page or category once new category is cclick on our site
+        //Note: if we are creating we might not have Id but updating require Id
+        public IActionResult UpSert(int? id) //note: we change our create to UpSert//this method help with creation of new page or category once new category is cclick on our site
         {
             //how do retrieve list of product without any other model, we use Ienumerable container with help of SelectListItem
             //IEnumerable<SelectListItem> CategoryList = _UnitOfWork.Category.GetAll() //how do we retrieve and convert product from our database, we use EF Projection             
@@ -44,18 +44,29 @@ namespace ASP_WebApi.Areas.Admin.Controllers
             //Another method to vew our data creating seperate class to realize these
             ProductVM productVM = new()
             {
-                CategoryList = _UnitOfWork.Category.GetAll().Select(u => new SelectListItem//how do we retrieve and convert product from our database, we use EF Projection             
+                //CategoryList = _UnitOfWork.Category.GetAll().Select(u => new SelectListItem//how do we retrieve and convert product from our database, we use EF Projection             
                  
-                 {
-                     //next we pass in property that needs to be populated
-                     Text = u.Name,
-                     Value = u.Id.ToString()
+                // {
+                //     //next we pass in property that needs to be populated
+                //     Text = u.Name,
+                //     Value = u.Id.ToString()
 
-                 }),
+                // }),
             Product = new Product(),
 
             };
-            return View(productVM);
+            if(id ==null || id ==0)
+            {
+                //Create functionaity
+                return View(productVM);
+            }
+            else
+            {
+                //Update functionality
+                productVM.Product = _UnitOfWork.Product.Get(u => u.Id == id); //we use Get because we want to return only the product
+                return View(productVM);
+            }
+          
         }
 
         [HttpPost]
@@ -71,14 +82,14 @@ namespace ASP_WebApi.Areas.Admin.Controllers
             else
             {
 
-                productVM.CategoryList = _UnitOfWork.Category.GetAll().Select(u => new SelectListItem//how do we retrieve and convert product from our database, we use EF Projection             
+                //productVM.CategoryList = _UnitOfWork.Category.GetAll().Select(u => new SelectListItem//how do we retrieve and convert product from our database, we use EF Projection             
 
-                {
-                    //next we pass in property that needs to be populated
-                    Text = u.Name,
-                    Value = u.Id.ToString()
+                //{
+                //    //next we pass in property that needs to be populated
+                //    Text = u.Name,
+                //    Value = u.Id.ToString()
 
-                });
+                //});
                 return View(productVM);
             }
         }

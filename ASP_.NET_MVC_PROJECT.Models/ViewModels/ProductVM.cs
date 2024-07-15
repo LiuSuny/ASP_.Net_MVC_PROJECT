@@ -12,7 +12,7 @@ namespace ASP_.Net_MVC_PROJECT.Models.ViewModels
     {
         public Product Product { get; set; }
         [ValidateNever] //these will make sure it doesn't validate the CategoryList below
-        public IEnumerable<SelectListItem> CategoryList { get; set; }
+        public IEnumerable<SelectListItem> CategoryList;
         
     }
 }
